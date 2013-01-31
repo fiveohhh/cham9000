@@ -6,86 +6,54 @@
 Introduction
 ====================================
 
-The CHAM9000 was initially designed to monitor and report temperatures.  It has 
-since taken on the roll of monitoring garage doors and the "Presence" of things. 
-The core system runs on a RaspberryPi_.  Requires an SD card that is atleast 4GB.
+The CHAM9000 is a self contained open source home monitoring and automation 
+system.  The core feature of the CHAM9000 is its ability to monitor a garage 
+door and not only display the status of that door on a web page, but can send 
+the owner an email if the door is left open for a predefined time period.
 
-The wireless portion of the system uses the Nordic nRF24L01P_ radio.
+The CHAM9000 has the ability to monitor and control nearly anything.  Currently,
+there is support for sensing the "Presence" of things, log/report temperatures, 
+communicate with a Radiothermostat_.
 
-.. _RaspberryPi: http://www.raspberrypi.org/
-.. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
- 
- 
+Getting Started
+========================
+The following links will provide some help in setting up your system as well 
+as describe the CHAM9000 as a whole.
 
-Initial Install and Setup
-=============================
-Only the RaspberryPi is required for these intitial setup steps
+* :doc:`initial_setup`
+* :doc:`architecture`
+* :doc:`cham_protocol`
 
-1.  Download the latest Raspbian image from http://www.raspberrypi.org/downloads.  
-    I've used `Win32DiskImager <https://launchpad.net/win32-image-writer>`_ to 
-    successfully write the image to an SD card on both Windows 7 and 8.
 
-2.  Once the the Pi is running, we want to expand the root partion, this can be done
-    by running the raspi-config tool::
 
-        pi@raspberrypi ~ $sudo raspi-config
 
-    This will present a GUI, select expand_rootfs.  Once this is done, reboot the Pi.  
-    The partition will be expanded when the Pi boots up, It took about 3 minutes on my
-    16GB SD card.
 
-3.  Next we will want to install and run Hexxeh's rpi-update tool.  Running the tool 
-    will take ~5 minutes::
-    
-        pi@raspberrypi ~ $sudo wget http://goo.gl/1BOfJ -O /usr/bin/rpi-update && sudo chmod +x /usr/bin/rpi-update
-        pi@raspberrypi ~ $sudo rpi-update
+Hardware Requirements
+============================
+Basic hardware requirements to wirelessly monitor a garage door:
 
-4.  In order for the update to take, we need to reboot once again
+* Two nRF24L01P_ radios.  Something like `these <https://www.amazon.com/dp/B004U984UK/?tag=cham9000-20>`_ should work fine.
+* A RaspberryPi_
+* An `Arduino <https://www.amazon.com/dp/B006H06TVG/?tag=cham9000-20>`_
+* A `magnetic door switch <https://www.amazon.com/dp/B0009SUF08/?tag=cham9000-20>`_
+* Two strands of wire long enough to reach from your RaspberryPi_ to the
+    garage door.
+* Power supplies and power cables for the RaspberryPi and Arduino.
 
-5.  Now we install and setup permissions for the SPI device. This involves removing the 
-    spi module from the blacklist.  To do this uncomment the ``#blacklist spi-bcm2708`` line
-    from the ``/etc/modprobe.d/raspi-blacklist.conf`` file.   Then add ``spidev`` to the 
-    ``/etc/modules`` file
-    
-    The last step for setting up SPI involves changing some permissions, so we can use SPI
-    without being root.  To do this run the following lines::
+
         
-        pi@raspberrypi ~ $sudo groupadd -f --systemspi
-        pi@raspberrypi ~ $sudo adduser pi spi
-        
-    Finally, as root (sudo) create a file called ``90-spi.rules`` in the ``/etc/udev/rules.d/``
-    directory with the following contents.::
-    
-        SUBSYSTEM=="spidev", GROUP="spi"
-        
-4.  In order for the new permissions to take, we need to reboot.
 
-5.  Install python3 setuptools::
-    
-        pi@raspberrypi ~ $sudo apt-get install python3-setuptools
-        
-6.  Install gpio-admin::
-    
-        pi@raspberrypi ~ $git clone https://github.com/quick2wire/quick2wire-gpio-admin
-        pi@raspberrypi ~ $cd quick2wire-gpio-admin
-        pi@raspberrypi ~ $sudo python3 setup.py install
-        
-7.  Install quick2wire::
 
-        pi@raspberrypi ~ $git clone https://github.com/quick2wire/quick2wire-python-api.git
-        pi@raspberrypi ~ $cd quick2wire-python-api
-        pi@raspberrypi ~ $sudo python3 setup.py install
-        
-        
+Index
+==========
 .. toctree::
    :maxdepth: 2
+   
+   initial_setup
+   architecture
+   cham_protocol
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. _Radiothermostat: http://www.radiothermostat.com/
+.. _RaspberryPi: http://www.raspberrypi.org/
+.. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
 
