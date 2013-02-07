@@ -36,7 +36,7 @@ so that it can talk with the wireless radios.
     The last step for setting up SPI involves changing some permissions, so we can use SPI
     without being root.  To do this run the following lines::
         
-        $sudo groupadd -f --systemspi
+        $sudo groupadd -f --system spi
         $sudo adduser pi spi
         
     Finally, as root (sudo) create a file called ``90-spi.rules`` in the ``/etc/udev/rules.d/``
