@@ -50,11 +50,10 @@ so that it can talk with the wireless radios.
     
         $sudo apt-get install python3-setuptools
         
-#.  Install gpio-admin::
+#.  Install gpio-admin by running the following in the root of the source directory::
     
-        $git clone https://github.com/quick2wire/quick2wire-gpio-admin
-        $cd quick2wire-gpio-admin
-        $sudo python3 setup.py install
+        $make
+        $sudo make install
         
 #.  Install quick2wire::
 
