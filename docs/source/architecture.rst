@@ -45,3 +45,16 @@ There are two types of logical componenets in the CHAM9000 system.
     [Cham] -up-> [paw 1] 
     [Cham] -right-> [paw 3] 
     
+
+    
+    
+Glossary
+-------------
+
+===========     ======================================================
+Term            Definition
+===========     ======================================================
+CHAM9000        A home automation and monitoring system
+Cham            The central server component of the CHAM9000 system
+Paw             A remote node that reports information to the Cham
+===========     ======================================================
