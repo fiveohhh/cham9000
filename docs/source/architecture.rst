@@ -1,7 +1,7 @@
 .. _architecture:
 
-Architecture
-================
+CHAM9000 Architecture
+========================
 
 .. contents::
 
@@ -21,9 +21,30 @@ The wireless portion of the system uses the Nordic nRF24L01P_ radio.
 .. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
 
 
+    
+Architectural Goals
+-------------------
 
-Components
--------------
+Requirements
+------------
+
+Functional
+""""""""""
+
+Non-functional
+""""""""""""""
+
+Goals
+-----
+
+Constraints
+-----------
+
+Architectural Priciples
+-----------------------
+
+Top-level Components
+--------------------
 There are two types of logical componenets in the CHAM9000 system.  
 
 1. The Cham
@@ -45,7 +66,20 @@ There are two types of logical componenets in the CHAM9000 system.
     [Cham] -up-> [paw 1] 
     [Cham] -right-> [paw 3] 
     
+Security concerns
+-----------------
 
+Paw discovery mechanism
+-----------------------
+    
+    
+Architecture of the Cham
+------------------------
+
+Architecture of the Paws
+------------------------
+
+    
     
     
 Glossary
