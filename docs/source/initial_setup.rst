@@ -29,12 +29,15 @@ so that it can talk with the wireless radios.
 #.  In order for the update to take, we need to reboot once again
 
 #.  Now we install and setup permissions for the SPI device. This involves removing the 
-    spi module from the blacklist.  To do this uncomment the following line 
-        ``#blacklist spi-bcm2708``
+    spi module from the blacklist.  To do this uncomment the following line::
+    
+        #blacklist spi-bcm2708
+        
     from the ``/etc/modprobe.d/raspi-blacklist.conf`` file.   
     
-    Then add the following line to the ``/etc/modules`` file
-        ``spidev``
+    Then add the following line to the ``/etc/modules`` file::
+    
+        spidev
     
     The last step for setting up SPI involves changing some permissions, so we can use SPI
     without being root.  To do this run the following lines::
