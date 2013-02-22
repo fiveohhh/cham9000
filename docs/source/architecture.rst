@@ -78,7 +78,35 @@ Security concerns
 
 Paw discovery mechanism
 -----------------------
+.. uml::
+    title Discovery over wireless gateway\n with unconfigured Paw 
     
+    actor User
+    participant Paw
+    participant Cham
+    Paw -> Cham : getChamAddr()
+    note right
+        look for an available  
+        Cham on discovery channel
+    end note
+    Paw <-- Cham
+    note right
+        Cham will respond to 
+        discover request with its 
+        private address
+    end note
+    Paw -> Cham : reportCluster()
+    note right
+        The Paw reports its interfaces
+        to the Cham.
+    end note
+    User ->Cham : AuthorizePaw()
+    note right
+        The user authorizes the device
+        through the Chams webinterface
+    end note
+    Cham -> Paw : sendPrivateKey()
+
     
 Architecture of the Cham
 ------------------------
