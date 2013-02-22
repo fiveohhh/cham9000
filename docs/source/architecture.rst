@@ -110,11 +110,20 @@ Paw discovery mechanism
     
 Architecture of the Cham
 ------------------------
+Interface
+""""""""""
+All communications with the Cham will be over HTTP with what is essentially
+a RESTful interface.  However, all resource queries will be limited to read-only 
+requests, with the exception of messages implementing the Cham Protocol.
 
 Architecture of the Paws
 ------------------------
+Paws are currently one-way devices.  A Pas can either be an embedded device with
+a wireless radio, or any type of device with the ability to make HTTP requests.
 
-    
+Interface
+"""""""""
+All Paws will communicate with the Cham using the native :ref:`cham_protocol`.    
     
     
 Glossary
