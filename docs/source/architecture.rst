@@ -21,7 +21,7 @@ The wireless portion of the system uses the Nordic nRF24L01P_ radio.
 .. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
 
 
-    
+
 Architectural Goals
 -------------------
 
@@ -52,7 +52,7 @@ Architectural Priciples
 
 Top-level Components
 --------------------
-There are two types of logical componenets in the CHAM9000 system.  
+There are two types of logical components in the CHAM9000 system.  
 
 1. The Cham
     Each system will have one and only one server component known as the Cham.  
