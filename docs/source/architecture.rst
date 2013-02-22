@@ -129,10 +129,15 @@ All Paws will communicate with the Cham using the native :ref:`cham_protocol`.
 Glossary
 -------------
 
-===========     ======================================================
-Term            Definition
-===========     ======================================================
-CHAM9000        A home automation and monitoring system
-Cham            The central server component of the CHAM9000 system
-Paw             A remote node that reports information to the Cham
-===========     ======================================================
+================  ======================================================
+Term              Definition
+================  ======================================================
+CHAM9000          A home automation and monitoring system
+
+Cham              The central server component of the CHAM9000 system
+
+Paw               A remote node that reports information to the Cham
+
+Wireless gateway  The portion of the system that allows wireless devices to 
+                  communicate with the central server
+================  ======================================================
