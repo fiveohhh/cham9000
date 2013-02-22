@@ -1,4 +1,4 @@
-.. _cham_message_types::
+.. _cham_protocol:
 
 CHAM9000 Message Types
 ============================
