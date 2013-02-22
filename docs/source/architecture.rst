@@ -31,8 +31,15 @@ Requirements
 Functional
 """"""""""
 
+ #. Shall allow for the addition of atleast 255 nodes
+ #. All nodes shall communicate with the central server over HTTP or through a 
+    wireless gateway
+
 Non-functional
 """"""""""""""
+ #. Shall cost less then $100 for all components required to monitor a garage 
+    door
+ #. Shall allow a user to add remote nodes without having to flash firmware
 
 Goals
 -----
