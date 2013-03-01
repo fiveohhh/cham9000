@@ -6,7 +6,28 @@ CHAM9000 Architecture
 .. contents::
 
 
+.. _glossary: 
+   
+Glossary
+--------
 
+================  ======================================================
+Term              Definition
+================  ======================================================
+CHAM9000          A home automation and monitoring system
+
+Cham              The central server component of the CHAM9000 system
+
+Paw               A remote node that reports information to the Cham
+
+Wireless gateway  The portion of the system that allows wireless devices to 
+                  communicate with the central server
+
+Yip               The abilities that a paw can implement.  For example,
+                  a paw that is monitoring two temperature sensors and a 
+                  door sensor would implement two temperature yips and a 
+                  single door yip.
+================  ======================================================
 
 
 
@@ -16,7 +37,6 @@ Architectural Goals
 Because the CHAM9000 has the ability to span multiple platforms, careful
 consideration is given to determine an efficient and cohesive way to send
 messages between the central server and any other sensor nodes.
-
 
 Requirements
 ------------
@@ -40,6 +60,7 @@ Goals
 
 Constraints
 -----------
+wireless packet size limited to 32 bytes.. string data?
 
 Architectural Priciples
 -----------------------
@@ -55,17 +76,32 @@ There are two types of logical components in the CHAM9000 system.
     to.
 
 2. Paws
-    Paws are  devices that report data  to the Cham.  Each Paw can implment 
-    multiple interfaces.  For example, a Paw can implement a temperature and a 
-    door interface.  It can therefore report both temperature and door status 
+    Paws are devices that report data to the Cham.  Each Paw can implement 
+    multiple yips.  For example, a Paw can implement a temperature 
+    and a door yip.  It can therefore report both temperature and door status 
     information back to the Cham.
+    
+Top-level Component view
+------------------------
+The below diagram shows a high-level view of the two ways that a paw can connect
+to the Cham.
 
 .. uml::
 
-    [Cham] -left-> [paw 2] 
-    [Cham] -down-> [paw 4]
-    [Cham] -up-> [paw 1] 
-    [Cham] -right-> [paw 3] 
+    [Cham] -- HTTP
+    HTTP - [wireless_gateway]
+    [wireless_gateway] -- RF
+    
+    package "Wireless Paws" {
+    Nordic_Radio -- [Paw 1]
+    Nordic_Radio - [Paw 2]
+    Nordic_Radio -- RF
+    }
+    package "TCP/IP Paws" {
+    network_connection -- [Paw 3]
+    network_connection - [Paw 4]
+    HTTP - network_connection
+    }
     
 Hardware
 --------
@@ -76,8 +112,8 @@ and various scripts that help the Cham perform its duties.
 The RaspberryPi_ will also connect to a Nordic nRF24L01P_ radio via SPI.  This
 radio will perform the wireless gateway functionality of the Cham.
 
-Individual Paws will have not be tied to any specific hardware.  all that will
-be required of a Paw to connect to the Cham will be either an Ethernet
+Individual Paws will have not be tied to any specific hardware.  All that will
+be required for a Paw to connect to the Cham will be either an Ethernet
 connection or a nRF24L01P_ radio.
 
 .. _RaspberryPi: http://www.raspberrypi.org/
@@ -93,15 +129,29 @@ Interface
 All communications with the Cham will be over HTTP with what is essentially
 a RESTful interface.  However, there will only be a single write-only resource.
 This interface will implement the native :ref:`cham_protocol`.
+
 Third party applications will also have the ability to query data from the Cham
 using read-only REST interfaces. This data could include temperature or current
 status of a door.
 
+The REST resources that will be available to third parties will be
+implementation dependent.  All REST resources will be controlled through the
+TastyPie_ Django Application.
+
+Paws that are using the wireless gateway to talk with the Cham will 
+
+.. _TastyPie: http://tastypieapi.org/
+
 Architecture of the Paws
 ------------------------
+The architecture that the Paws implement is completely up to the author of the
+Paw.  Therefore, no assumptions will be made about their actually architecture,
+however, they will be required to implement the appropriate interfaces.
+
 Paws are currently one-way devices.  A Paw can either be an embedded device with
-a wireless radio, or any type of device with the ability to make HTTP requests.
-Each Paw  will be required to implement a 
+a nRF24L01P_ radio, or any type of device with the ability to make HTTP 
+requests. Each paw will be required to implement at least one yip. The paw must 
+notify the Cham of the yips it implements during the Paw discovery time.
 
 Interface
 """""""""
@@ -128,9 +178,9 @@ Paw discovery mechanism
         discover request with its 
         private address
     end note
-    Paw -> Cham : reportCluster()
+    Paw -> Cham : reportYips()
     note right
-        The Paw reports its interfaces
+        The Paw reports its yips
         to the Cham.
     end note
     User ->Cham : AuthorizePaw()
@@ -140,19 +190,4 @@ Paw discovery mechanism
     end note
     Cham -> Paw : sendEncryptionKey()    
     
-    
-Glossary
--------------
 
-================  ======================================================
-Term              Definition
-================  ======================================================
-CHAM9000          A home automation and monitoring system
-
-Cham              The central server component of the CHAM9000 system
-
-Paw               A remote node that reports information to the Cham
-
-Wireless gateway  The portion of the system that allows wireless devices to 
-                  communicate with the central server
-================  ======================================================
