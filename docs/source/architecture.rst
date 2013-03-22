@@ -38,6 +38,12 @@ Because the CHAM9000 has the ability to span multiple platforms, careful
 consideration is given to determine an efficient and cohesive way to send
 messages between the central server and any other sensor nodes.
 
+Careful consideration is also given to extensibility.  The Cham is to be
+designed as a home monitoring solution.  There will be some core functionality
+that will allow out of the box operations, but most of the functionality
+will be provided through the implementation of plugins.  Therefor, a key 
+element of the architecture will be the ease of plugin development.
+
 Requirements
 ------------
 
@@ -47,7 +53,9 @@ Functional
  #. Shall allow for the addition of atleast 255 nodes
  #. All nodes shall communicate with the central server over HTTP or through a 
     wireless gateway
+ #. The wireless gateway shall only communicate with the Cham over HTTP
  #. The wireless gateway shall use Nordic Semiconductor 2.4GHz radios.
+ #. Shall run on a RaspberryPi Model B
 
 Non-functional
 """"""""""""""
@@ -55,12 +63,15 @@ Non-functional
     door
  #. Shall allow a user to add remote nodes without having to flash firmware
 
-Goals
------
 
 Constraints
 -----------
-wireless packet size limited to 32 bytes.. string data?
+One possible constraint will be the physical limitation of the packet buffer in
+the wireless radios.  Each packet can be a maximum of 32 bytes.  Currently
+all Cham messages are of a fixed known length and do not require larger packets.
+This is a constraint that could be eliminated by packet assembly/segmentation
+done in software.
+
 
 Architectural Priciples
 -----------------------
@@ -124,6 +135,9 @@ Security concerns
 
 Architecture of the Cham
 ------------------------
+The core sub-components of the Cham are Django web app and a small suite of
+scripts and executables that will assist the Cham in monitoring activities.
+
 Interface
 """"""""""
 All communications with the Cham will be over HTTP with what is essentially
@@ -138,7 +152,92 @@ The REST resources that will be available to third parties will be
 implementation dependent.  All REST resources will be controlled through the
 TastyPie_ Django Application.
 
-Paws that are using the wireless gateway to talk with the Cham will 
+Django Apps
+"""""""""""
+The Chams web interface will be made up of two Django applications.  One
+application will be "head-less" and will provide the REST interfaces into the
+Chams database.  Theses interfaces will include the APIs for third party 
+applications querying the Cham, as well as accepting valid Cham messages.  The 
+second application will be responsible the presentation layer and will be
+responsible for presenting information to the user.
+
+Typically machines will be interacting with the Rest Interface and users will
+interact with the presentation layer.
+
+Both of these application will operate on the same database.  Below is a diagram
+of this type of architecture.
+
+.. uml::
+    cloud {
+    [Users]
+    [Machines]
+    }
+
+    package "Django Apps" {
+    [Rest Interface]
+    [Presentation Layer]
+    }
+    database "sqlite3" {
+    [historical data]
+    }
+    
+    
+    [Users] -> [Presentation Layer]
+    [Machines] -> [Rest Interface]
+    [Rest Interface] -- [historical data]
+    [Presentation Layer] -- [historical data]
+
+An alternative option would have been for the Presentation Layer to interact 
+with the Rest Interface, rather then directly with the database.  This would 
+provide an "eat your own dog food" type of architecture.  A large benefit to
+this architecture would be the innate testing of the API's.
+
+.. uml::
+    cloud {
+    [Users]
+    [Machines]
+    }
+
+    package "Django Apps" {
+    [Rest Interface]
+    [Presentation Layer]
+    }
+    database "sqlite3" {
+    [historical data]
+    }
+    
+    
+    [Users] -> [Presentation Layer]
+    [Machines] -> [Rest Interface]
+    [Rest Interface] -- [historical data]
+    [Presentation Layer] -- [Rest Interface]
+
+Both models are still on the table and further research needs to done to
+determine the model that will be used.
+
+The wireless gateway 
+""""""""""""""""""""
+The wireless gateway will not do any message translating or routing.  It simply
+takes what it hears on the RF side and passes it along on the HTTP side.
+Currrently data only flows from the RF to the HTTP side of the gateway, but 
+implementing two-way wireless messaging is at the top of the list of 
+enhancements.
+
+.. uml::
+    [Wireless Paw]
+    package "Raspberry Pi" {
+    [Rest Interface]
+    [Wireless Gateway]
+    }
+    database "sqlite3" {
+    [historical data]
+    }
+    
+    [Wireless Paw] --> [Wireless Gateway]
+    [Wireless Gateway] -> [Rest Interface]
+    [Rest Interface] -- [historical data]
+    
+
 
 .. _TastyPie: http://tastypieapi.org/
 
