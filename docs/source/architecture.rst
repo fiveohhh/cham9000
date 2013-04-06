@@ -83,8 +83,8 @@ There are two types of logical components in the CHAM9000 system.
 1. The Cham
     Each system will have one and only one server component known as the Cham.  
     This component is hosted on the raspberryPi.  It's main sub-components are
-    the webserver and the wireless gateway that independent ``Paws`` can connect 
-    to.
+    the webserver and the wireless gateway that independent ``Paws`` can 
+    connect to.
 
 2. Paws
     Paws are devices that report data to the Cham.  Each Paw can implement 
@@ -289,4 +289,41 @@ Paw discovery mechanism
     end note
     Cham -> Paw : sendEncryptionKey()    
     
+Components of The Cham
+------------------------
+This section will describe the architecture of the components within the Cham.
+This includes the wireless gateway, the helper scripts, as well as the Cham
+application itself.
 
+The Wireless Gateway
+""""""""""""""""""""
+First we discuss the design of the wireless gateway.  This will consist of a 
+single process that runs as a daemon on the server. It will be written in 
+Python and process incoming data from the radio and pass it to the Cham over
+HTTP.  This current design only has the ability to receive messages from the
+radio.
+
+The gateway will listen for messages on two different addresses.  The first
+address will be a "discovery address" and for all Cham systems will be:
+0xCAM030303.  This address will be the one that a Paw will advertise itself on
+and allow a Cham the opportunity to associate itself with.  The second address 
+will be user defined in the config file and is the private address for an 
+individual system.  It's best to choose a random address that utilizes the full
+32bits of the address range.
+
+The wireless gateway will utilize the quick2wire library that will allow it to
+control the GPIO and SPI hardware blocks on the raspberryPi.  To do this some 
+knowledge of the Nordic radio is required.
+
+TODO: summary of nordic IO.
+
+Helper Scripts
+""""""""""""""
+Helper scripts allow the CHAM9000 to perform timed operations, as well as 
+serve as a translation layer for devices that aren't able to be directly
+controlled through the web application (TODO: Example***).  Alarms(cron checks)
+
+The Cham
+""""""""
+The Cham can be considered the heart of the system.  This is where all device
+data passes through. 
