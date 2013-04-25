@@ -289,11 +289,11 @@ Paw discovery mechanism
     end note
     Cham -> Paw : sendEncryptionKey()    
     
-Components of The Cham
-------------------------
-This section will describe the architecture of the components within the Cham.
-This includes the wireless gateway, the helper scripts, as well as the Cham
-application itself.
+Components of The Cham9000
+--------------------------
+This section will describe the architecture of the components within the 
+Cham9000.  This includes the wireless gateway, the helper scripts, as well as 
+the web application.
 
 The Wireless Gateway
 """"""""""""""""""""
@@ -319,9 +319,32 @@ TODO: summary of nordic IO.
 
 Helper Scripts
 """"""""""""""
-Helper scripts allow the CHAM9000 to perform timed operations, as well as 
-serve as a translation layer for devices that aren't able to be directly
-controlled through the web application (TODO: Example***).  Alarms(cron checks)
+There are two types of helper scripts, time series scripts, and non-time series
+scripts.  These could also be thought of as synchronous and asynchronous sripts.
+
+Time Series Scripts
+^^^^^^^^^^^^^^^^^^^
+These are operations that run at regular intervals.  This is accomplished using
+cron.  One limitation of cron is that nothing can run faster than every minute.
+The following is an example a time series helper script:
+
+    The Radio Thermostat CM30 has an http interface, but there is no way to 
+    program the thermostat so that it will tell the Cham9000 its current 
+    setpoint.  To get around this limitiation, a helper script was written that
+    runs every 15 minutes and retrieves the temperature from the thermostat.  
+    The helper script then relays this temperature onto the CHAM9000.  
+
+Non-time Series Scripts
+^^^^^^^^^^^^^^^^^^^^^^^
+These are scripts thar aren't run at regular intervals.  They can either run at
+boot or be triggered by an interrupt.  The following is an example of a non-time
+series script:
+
+    The wireless gateway utilizes the a radio that notifies data is ready by
+    raising a GPIO.  In order to retrieve the data from the radio, a script is 
+    triggered whenever the GPIO is raised.  This script retrieves the data from
+    the radio and exits..
+
 
 The Cham
 """"""""
