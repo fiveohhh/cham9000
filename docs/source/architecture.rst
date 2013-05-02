@@ -72,6 +72,21 @@ all Cham messages are of a fixed known length and do not require larger packets.
 This is a constraint that could be eliminated by packet assembly/segmentation
 done in software.
 
+Hardware
+--------
+At the core of the CHAM9000 sits a RaspberryPi_ Model B.  The Raspberry Pi will
+host all services that the Cham requires.  Initially this will be a webserver
+and various scripts that help the Cham perform its duties.  
+
+The RaspberryPi_ will also connect to a Nordic nRF24L01P_ radio via SPI.  This
+radio will perform the wireless gateway functionality of the Cham.
+
+Individual Paws will have not be tied to any specific hardware.  All that will
+be required for a Paw to connect to the Cham will be either an Ethernet
+connection or a nRF24L01P_ radio.
+
+.. _RaspberryPi: http://www.raspberrypi.org/
+.. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
 
 Architectural Priciples
 -----------------------
@@ -113,22 +128,7 @@ to the Cham.
     network_connection - [Paw 4]
     HTTP - network_connection
     }
-    
-Hardware
---------
-At the core of the CHAM9000 sits a RaspberryPi_ Model B.  The Raspberry Pi will
-host all services that the Cham requires.  Initially this will be a webserver
-and various scripts that help the Cham perform its duties.  
 
-The RaspberryPi_ will also connect to a Nordic nRF24L01P_ radio via SPI.  This
-radio will perform the wireless gateway functionality of the Cham.
-
-Individual Paws will have not be tied to any specific hardware.  All that will
-be required for a Paw to connect to the Cham will be either an Ethernet
-connection or a nRF24L01P_ radio.
-
-.. _RaspberryPi: http://www.raspberrypi.org/
-.. _nRF24L01P: http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRF24L01P
 
 Security concerns
 -----------------
