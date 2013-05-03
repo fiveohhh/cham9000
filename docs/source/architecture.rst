@@ -114,9 +114,11 @@ to the Cham.
 
 .. uml::
 
+    package "CHAM9000" #DDDDDD{
     [Cham] -- HTTP
     HTTP - [wireless_gateway]
     [wireless_gateway] -- RF
+    }
     
     package "Wireless Paws" {
     Nordic_Radio -- [Paw 1]
