@@ -120,12 +120,12 @@ to the Cham.
     [wireless_gateway] -- RF
     }
     
-    package "Wireless Paws" {
+    cloud "Wireless Paws"  {
     Nordic_Radio -- [Paw 1]
     Nordic_Radio - [Paw 2]
     Nordic_Radio -- RF
     }
-    package "TCP/IP Paws" {
+    cloud "TCP/IP Paws"  {
     network_connection -- [Paw 3]
     network_connection - [Paw 4]
     HTTP - network_connection
