@@ -134,6 +134,30 @@ to the Cham.
 
 Security concerns
 -----------------
+Currently the CHAM9000 can only report details of events and send emails.
+However, the next phase of development will enable the the Cham9000 system to 
+physically change the world it is installed in.  This means that not only will
+I be able to receive an email that my door was left open, the CHAM9000 will be
+able to automatically close the door.
+
+This brings major security concerns into the picture, while currently someone
+viewing the status page of the cham will be able to see if my garage door is
+open, they could also drive by my house and gain the same amount of information.
+So while security is currently a small concern, it will be come a major concern
+in future revisions of the system
+
+Because the system will have the ability to control the physical world, we want
+to be sure that we don't cause what could be the start of `Skynet
+<http://en.wikipedia.org/wiki/Skynet_(Terminator)>`_.  We also want to make sure
+that a hacker (human) will not have the ability to control devices attached
+to the CHAM9000.
+
+Some beginnings of a security protocol can be seen in the 
+`Paw discovery mechanism`_ section.  There are some weaknesses in this proposal.
+For one, the encryption key needs to be initially sent over plaintext airwaves.
+The encryption algoritm is also not very strong and could be brute force hacked.
+However, with the limited RAM/CPU of some of the embedded devices, full fledged
+encryption algorithms cannot be used.
 
 Architecture of the Cham
 ------------------------
