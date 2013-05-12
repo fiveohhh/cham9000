@@ -15,6 +15,14 @@ The CHAM9000 has the ability to monitor and control nearly anything.  Currently,
 there is support for sensing the "Presence" of things, log/report temperatures, 
 communicate with a Radiothermostat_.
 
+The CHAM9000 is currently limited to monitoring a few different types of
+sensors.  However, the current state is only a jumping stone for what it is 
+really capable of.  Future revisions will have documented APIs that will allow
+third party developers to develop there own modules to plug in any type of
+sensor.  There will also be support for the CHAM9000 to initiate calls to remote
+nodes.  Currently the CHAM9000 only accepts connections, and this severly limits
+its ability to operate in a full fledged home automation system.
+
 Getting Started
 ========================
 The following links will provide some help in setting up your system as well 
@@ -32,7 +40,8 @@ Hardware Requirements
 ============================
 Basic hardware requirements to wirelessly monitor a garage door:
 
-* Two nRF24L01P_ radios.  Something like `these <https://www.amazon.com/dp/B004U984UK/?tag=cham9000-20>`_ should work fine.
+* Two nRF24L01P_ radios.  Something like `these 
+<https://www.amazon.com/dp/B004U984UK/?tag=cham9000-20>`_ should work fine.
 * A RaspberryPi_
 * An `Arduino <https://www.amazon.com/dp/B006H06TVG/?tag=cham9000-20>`_
 * A `magnetic door switch <https://www.amazon.com/dp/B0009SUF08/?tag=cham9000-20>`_
