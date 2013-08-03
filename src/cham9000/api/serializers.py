@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import TemperatureReading
+from cham9000.api.models import TemperatureReading
 
 class TemperatureReadingSerializer(serializers.ModelSerializer):
     class Meta:

@@ -5,7 +5,7 @@ from django.conf.urls.defaults import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'apiv1/',include('api.urls')),
+    url(r'apiv1/',include('cham9000.api.urls')),
     # Examples:
     # url(r'^$', 'cham9000.views.home', name='home'),
     # url(r'^cham9000/', include('cham9000.foo.urls')),

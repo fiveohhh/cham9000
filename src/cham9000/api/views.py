@@ -1,7 +1,7 @@
 # Create your views here.
-from api.models import TemperatureReading
+from cham9000.api.models import TemperatureReading
 from rest_framework import generics
-from api.serializers import TemperatureReadingSerializer
+from cham9000.api.serializers import TemperatureReadingSerializer
 from django.utils.dateparse import parse_datetime
 
 class TemperatureReadingList( generics.ListAPIView):
